@@ -1,0 +1,2710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaradhya - Digital Menu</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat&family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@300..800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* DESIGN SYSTEM - CSS VARIABLES */
+        :root {
+            /* Core colors */
+            --color-bg: #FAF7F2;
+            /* Warm cream background */
+            --color-accent: #9B1B30;
+            /* Deep burgundy hero */
+            --color-text: #1A1A1A;
+            --color-card: #EAF4EE;
+            /* Soft sage green for menu cards */
+            --color-modal-bg: #B8CDB0;
+            --color-modal-muted: #4A4643;
+            --color-muted: #6B6560;
+
+            /* Liquid Glass - refined light green */
+            --glass-bg: rgba(180, 235, 210, 0.20);
+            --glass-border: rgba(160, 220, 195, 0.25);
+            --glass-shadow: rgba(120, 190, 165, 0.15);
+            --glass-glow: rgba(150, 220, 190, 0.08);
+            --glass-text: #1A4A3A;
+            --glass-active: #2D8F6F;
+            /* Rich sage green for active states */
+
+            --font-display: 'Fraunces', serif;
+            --font-script: 'Caveat', cursive;
+            --font-body: 'Manrope', sans-serif;
+        }
+
+        /* GLOBAL RESETS & BASE STYLES */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-display);
+            font-weight: normal;
+        }
+
+        /* HERO SECTION STYLES */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .hero-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .logo-3d-wrapper {
+            transform-style: preserve-3d;
+            opacity: 0;
+            filter: drop-shadow(0 10px 15px rgba(155, 27, 48, 0.15));
+        }
+
+        .logo-text-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-logo-text {
+            font-family: var(--font-script);
+            font-size: 150px;
+            color: var(--color-accent);
+            line-height: 1;
+            margin: 0;
+            padding: 0 10px;
+            white-space: nowrap;
+            position: relative;
+            display: inline-block;
+            filter: drop-shadow(0 2px 8px rgba(155, 27, 48, 0.2));
+        }
+
+        .hero-logo-text .splatter-letter {
+            display: inline-block;
+            opacity: 0;
+            position: relative;
+        }
+
+        .splatter-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: var(--color-accent);
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .sheen-sweep {
+            position: absolute;
+            top: -20%;
+            left: -100%;
+            width: 50%;
+            height: 140%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: skewX(-20deg);
+            opacity: 0;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* AMBIENT BLOBS */
+        .ambient-blobs {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .blob-parallax {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.12;
+            background-color: var(--color-accent);
+        }
+
+        .blob-1 {
+            width: 50vw;
+            height: 50vw;
+            max-width: 600px;
+            max-height: 600px;
+            top: -10%;
+            left: -10%;
+            border-radius: 60% 40% 50% 70%;
+            animation: float1 14s ease-in-out infinite;
+        }
+
+        .blob-2 {
+            width: 60vw;
+            height: 60vw;
+            max-width: 700px;
+            max-height: 700px;
+            bottom: -20%;
+            right: -10%;
+            background-color: var(--color-card);
+            opacity: 0.3;
+            border-radius: 40% 60% 70% 30%;
+            animation: float2 11s ease-in-out infinite;
+        }
+
+        .blob-3 {
+            width: 35vw;
+            height: 35vw;
+            max-width: 400px;
+            max-height: 400px;
+            top: 30%;
+            right: 10%;
+            border-radius: 50% 70% 30% 50%;
+            animation: float3 18s ease-in-out infinite;
+        }
+
+        @keyframes float1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(40px, 30px) scale(1.05);
+            }
+        }
+
+        @keyframes float2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(-30px, 40px) scale(0.95);
+            }
+        }
+
+        @keyframes float3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(-40px, -30px) scale(1.02);
+            }
+        }
+
+        /* TAGLINE */
+        .tagline-container {
+            margin-top: 1.5rem;
+            font-family: var(--font-body);
+            color: var(--color-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .cursor {
+            color: var(--color-accent);
+            font-weight: 800;
+            margin-left: 2px;
+            opacity: 0;
+            display: inline-block;
+        }
+
+        /* SCROLL CUE */
+        .scroll-cue {
+            position: absolute;
+            bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-body);
+            color: var(--color-accent);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0;
+            z-index: 10;
+        }
+
+        .scroll-chevron {
+            width: 24px;
+            height: 24px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .blob-1,
+            .blob-2,
+            .blob-3 {
+                animation: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-logo-text {
+                font-size: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-logo-text {
+                font-size: 80px;
+            }
+        }
+
+        /* ========================================================= */
+        /* LIQUID GLASS NAV – REFINED LIGHT GREEN (NO LINE)          */
+        /* ========================================================= */
+        .category-nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: transparent;
+            border: none;
+            padding: 0.8rem 1rem;
+            transition: background 0.4s, box-shadow 0.4s, backdrop-filter 0.4s;
+        }
+
+        .category-nav-inner {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 60px;
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 8px 40px var(--glass-shadow),
+                inset 0 0 60px var(--glass-glow),
+                0 0 0 1px rgba(255, 255, 255, 0.15) inset;
+            padding: 0.25rem 0.5rem;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        /* Liquid layers */
+        .liquid-layer {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+            animation: liquidFloat 20s ease-in-out infinite alternate;
+        }
+
+        .liquid-layer-1 {
+            width: 300px;
+            height: 300px;
+            top: -80px;
+            right: -40px;
+            background: radial-gradient(circle at 40% 30%, rgba(140, 220, 180, 0.25), rgba(100, 190, 150, 0.05));
+            animation-duration: 18s;
+            animation-delay: 0s;
+        }
+
+        .liquid-layer-2 {
+            width: 250px;
+            height: 250px;
+            bottom: -60px;
+            left: -20px;
+            background: radial-gradient(circle at 70% 60%, rgba(160, 230, 200, 0.2), rgba(120, 200, 170, 0.05));
+            animation-duration: 22s;
+            animation-delay: 3s;
+        }
+
+        .liquid-layer-3 {
+            width: 180px;
+            height: 180px;
+            top: 20%;
+            right: 20%;
+            background: radial-gradient(circle at 30% 70%, rgba(180, 240, 215, 0.2), rgba(140, 210, 185, 0.05));
+            animation-duration: 15s;
+            animation-delay: 6s;
+        }
+
+        .liquid-layer-4 {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            right: 10%;
+            background: radial-gradient(circle at 60% 40%, rgba(120, 200, 165, 0.2), rgba(100, 180, 150, 0.05));
+            animation-duration: 25s;
+            animation-delay: 2s;
+        }
+
+        @keyframes liquidFloat {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+
+            33% {
+                transform: translate(20px, -20px) scale(1.1) rotate(8deg);
+            }
+
+            66% {
+                transform: translate(-15px, 15px) scale(0.9) rotate(-5deg);
+            }
+
+            100% {
+                transform: translate(10px, -10px) scale(1.05) rotate(3deg);
+            }
+        }
+
+        /* Glass sheen */
+        .glass-sheen {
+            position: absolute;
+            top: -10%;
+            left: -20%;
+            width: 60%;
+            height: 50%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 80%);
+            border-radius: 60%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.5;
+            transform: rotate(-20deg);
+            animation: sheenMove 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes sheenMove {
+            0% {
+                transform: rotate(-20deg) translate(0, 0);
+            }
+
+            100% {
+                transform: rotate(-15deg) translate(30px, 20px);
+            }
+        }
+
+        .category-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0.75rem;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding: 0.6rem 0.8rem;
+            position: relative;
+            z-index: 2;
+            align-items: center;
+        }
+
+        .category-nav ul::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-nav li {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Glass tabs – active state uses background instead of line */
+        .category-nav button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-decoration: none;
+            color: var(--glass-text);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            padding: 0.6rem 1.4rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            color: #1A4A3A;
+            display: inline-block;
+        }
+
+        .category-nav button::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 40px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(160, 220, 195, 0.1));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .category-nav button:focus-visible {
+            outline: 2px solid var(--glass-active);
+            outline-offset: 3px;
+        }
+
+        @media (hover: hover) {
+            .category-nav button:hover {
+                background: rgba(255, 255, 255, 0.25);
+                border-color: rgba(255, 255, 255, 0.4);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(120, 190, 165, 0.2);
+                color: var(--glass-active);
+            }
+        }
+
+        .category-nav button.active {
+            background: rgba(45, 143, 111, 0.20);
+            border-color: var(--glass-active);
+            color: var(--glass-active);
+            box-shadow: 0 4px 20px rgba(45, 143, 111, 0.15), inset 0 0 20px rgba(45, 143, 111, 0.05);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        /* Fade overlays */
+        .nav-fade-left,
+        .nav-fade-right {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .category-nav {
+                padding: 0.6rem 0.5rem;
+            }
+
+            .category-nav-inner {
+                border-radius: 40px;
+                padding: 0.1rem 0.3rem;
+            }
+
+            .category-nav ul {
+                gap: 0.5rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .category-nav button {
+                font-size: 0.75rem;
+                padding: 0.4rem 1rem;
+                letter-spacing: 0.8px;
+            }
+
+            .nav-fade-left {
+                left: 0;
+                background: linear-gradient(to right, rgba(180, 235, 210, 0.5), transparent);
+                opacity: 1;
+            }
+
+            .nav-fade-right {
+                right: 0;
+                background: linear-gradient(to left, rgba(180, 235, 210, 0.5), transparent);
+                opacity: 1;
+            }
+        }
+
+        .category-nav.is-pinned .category-nav-inner {
+            background: rgba(180, 235, 210, 0.30);
+            backdrop-filter: blur(20px) saturate(200%);
+            -webkit-backdrop-filter: blur(20px) saturate(200%);
+            box-shadow: 0 8px 50px rgba(120, 190, 165, 0.2), inset 0 0 80px rgba(150, 220, 190, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+        }
+
+        /* ========================================================= */
+        /* SECTION DIVIDER & TITLE                                   */
+        /* ========================================================= */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .divider-line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: var(--glass-active);
+            /* Changed to green */
+            opacity: 0.3;
+        }
+
+        .divider-icon {
+            margin: 0 1.5rem;
+            width: 24px;
+            height: 24px;
+            fill: var(--color-accent);
+        }
+
+        /* MENU SECTION & CARD STYLES */
+        .menu-section {
+            padding: 6rem 1rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 50vh;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+            line-height: 1.1;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 1023px) {
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* ========================================================= */
+        /* SIDE SCROLLING FOR MOBILE (without changing card content) */
+        /* ========================================================= */
+        @media (max-width: 599px) {
+            .menu-grid {
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 16px;
+                padding: 0 1rem 1rem 1rem;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                margin: 0 -1rem;
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .menu-grid::-webkit-scrollbar {
+                display: none;
+            }
+
+            .menu-card-wrapper {
+                flex: 0 0 75%;
+                scroll-snap-align: start;
+                min-width: 200px;
+            }
+        }
+
+        .menu-card-wrapper {
+            perspective: 1000px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            border-radius: 16px;
+            will-change: transform, box-shadow;
+        }
+
+        .menu-card {
+            background-color: var(--color-card);
+            /* Soft Sage */
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            cursor: pointer;
+            will-change: transform;
+            transform-style: preserve-3d;
+        }
+
+        .menu-card-image-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            border-radius: 16px 16px 0 0;
+            background-color: #DCE8E0;
+            /* Darker sage for placeholder */
+        }
+
+        .menu-card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            display: block;
+        }
+
+        .menu-card-badge {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background-color: var(--glass-active);
+            /* Changed to green */
+            color: #FFF;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-body);
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(45, 143, 111, 0.3);
+            text-transform: uppercase;
+        }
+
+        .menu-card-badge svg {
+            width: 10px;
+            height: 10px;
+            fill: #FFF;
+        }
+
+        .menu-card-content {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            transform: translateZ(20px);
+        }
+
+        .menu-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-card-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--color-text);
+            line-height: 1.2;
+            flex: 1;
+        }
+
+        .menu-card-price-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        .menu-card-price {
+            font-family: var(--font-body);
+            font-weight: 700;
+            color: var(--color-accent);
+            font-size: 1.125rem;
+            white-space: nowrap;
+            display: inline-block;
+            transform-origin: right center;
+        }
+
+        .menu-card-note {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            color: var(--color-muted);
+            font-style: italic;
+            margin-top: 0.15rem;
+            white-space: nowrap;
+        }
+
+        .menu-card-desc {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--color-muted);
+            line-height: 1.4;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .menu-card-wrapper:hover {
+                transform: translateY(-6px);
+                box-shadow: 0 12px 30px rgba(155, 27, 48, 0.12);
+                z-index: 2;
+            }
+
+            .menu-card-wrapper:hover .menu-card-image {
+                transform: scale(1.08);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .menu-card-wrapper {
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+
+            .menu-card-wrapper:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.06);
+            }
+
+            .menu-card-wrapper:hover .menu-card-image {
+                transform: none;
+            }
+
+            .menu-card-content {
+                transform: none;
+            }
+        }
+
+        /* PRELOADER STYLES */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preloader-panel {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 50vh;
+            background-color: var(--color-bg);
+            z-index: 1;
+        }
+
+        .preloader-panel.top {
+            top: 0;
+        }
+
+        .preloader-panel.bottom {
+            bottom: 0;
+        }
+
+        .preloader-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .preloader-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1.5rem;
+        }
+
+        .preloader-cup {
+            fill: none;
+            stroke: var(--color-text);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .preloader-steam {
+            fill: none;
+            stroke: var(--color-accent);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 15;
+            stroke-dashoffset: 15;
+            animation: steamAnim 2s infinite ease-out;
+        }
+
+        .steam-1 {
+            animation-delay: 0s;
+        }
+
+        .steam-2 {
+            animation-delay: 0.4s;
+        }
+
+        .steam-3 {
+            animation-delay: 0.8s;
+        }
+
+        @keyframes steamAnim {
+            0% {
+                stroke-dashoffset: 15;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                stroke-dashoffset: -15;
+                opacity: 0;
+            }
+        }
+
+        .preloader-text {
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-muted);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+            animation: pulseText 1.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulseText {
+            0% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.5;
+            }
+        }
+
+        .preloader-track {
+            width: 200px;
+            max-width: 80vw;
+            height: 3px;
+            background-color: #E5E0DA;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .preloader-fill {
+            width: 0%;
+            height: 100%;
+            background-color: var(--color-accent);
+            border-radius: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .preloader-steam,
+            .preloader-text {
+                animation: none;
+                opacity: 1;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* FOOTER STYLES */
+        .site-footer {
+            background-color: var(--color-bg);
+            border-top: 3px solid var(--color-accent);
+            padding: 4rem 1rem 2rem;
+            position: relative;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .footer-top {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+                text-align: left;
+            }
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            color: var(--color-text);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-tagline,
+        .footer-info p,
+        .copyright {
+            font-family: var(--font-body);
+            color: var(--color-muted);
+        }
+
+        .footer-tagline {
+            font-size: 0.875rem;
+        }
+
+        .footer-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .footer-info p {
+            font-size: 0.875rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            color: var(--color-text);
+            transition: color 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+            border-radius: 50%;
+        }
+
+        .social-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .social-icon:hover {
+            color: var(--color-accent);
+            transform: translateY(-2px);
+        }
+
+        .social-icon:focus-visible,
+        .back-to-top:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .copyright {
+            font-size: 0.75rem;
+        }
+
+        .back-to-top {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: none;
+            border: none;
+            color: var(--color-text);
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-to-top svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s ease;
+        }
+
+        .back-to-top:hover {
+            color: var(--color-accent);
+        }
+
+        .back-to-top:hover svg {
+            transform: translateY(-2px);
+        }
+
+        /* Footer Animation Starting States */
+        .footer-anim-item {
+            opacity: 0;
+            transform: translateY(20px);
+            will-change: opacity, transform;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .footer-anim-item {
+                opacity: 1;
+                transform: none;
+            }
+
+            .social-icon:hover,
+            .back-to-top:hover svg {
+                transform: none;
+            }
+        }
+
+        /* ===================== ITEM DETAIL MODAL ===================== */
+        .item-modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .item-modal-overlay.is-open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .item-modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(26, 26, 26, 0.55);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        .item-modal {
+            position: relative;
+            background: var(--color-modal-bg);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 60px rgba(155, 27, 48, 0.18);
+            transform: translateY(24px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            scrollbar-width: none;
+        }
+
+        .item-modal::-webkit-scrollbar {
+            display: none;
+        }
+
+        .item-modal-overlay.is-open .item-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .item-modal-image-wrapper {
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .item-modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item-modal-body {
+            padding: 1.5rem;
+        }
+
+        .item-modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .item-modal-name {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--color-text);
+            line-height: 1.15;
+        }
+
+        .item-modal-price {
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--color-accent);
+            white-space: nowrap;
+        }
+
+        .item-modal-popular {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: var(--color-accent);
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.25rem 0.65rem;
+            border-radius: 20px;
+            margin-bottom: 0.75rem;
+        }
+
+        .item-modal-popular svg {
+            width: 12px;
+            height: 12px;
+            fill: currentColor;
+        }
+
+        .item-modal-desc {
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--color-modal-muted);
+            line-height: 1.5;
+            margin-bottom: 1.25rem;
+        }
+
+        .item-modal-ingredients-label {
+            font-family: var(--font-body);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .item-modal-ingredients {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            color: var(--color-modal-muted);
+            line-height: 1.6;
+            background: var(--color-card);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+        }
+
+        .item-modal-close {
+            position: absolute;
+            top: 0.85rem;
+            right: 0.85rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.85);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text);
+            transition: background 0.2s ease, color 0.2s ease;
+            z-index: 2;
+        }
+
+        .item-modal-close:hover {
+            background: var(--color-accent);
+            color: #fff;
+        }
+
+        .item-modal-close:focus-visible {
+            outline: 2px solid var(--color-accent);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .item-modal-overlay,
+            .item-modal {
+                transition: none;
+            }
+        }
+
+        /* ============================================================= */
+    </style>
+</head>
+
+<body>
+
+    <!-- PRELOADER -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-panel top" id="preloader-top"></div>
+        <div class="preloader-panel bottom" id="preloader-bottom"></div>
+        <div class="preloader-content" id="preloader-content">
+            <svg class="preloader-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <path class="preloader-steam steam-1" d="M 22 24 C 22 18, 16 16, 22 10" />
+                <path class="preloader-steam steam-2" d="M 32 24 C 32 18, 26 16, 32 10" />
+                <path class="preloader-steam steam-3" d="M 42 24 C 42 18, 36 16, 42 10" />
+                <path class="preloader-cup" d="M 16 28 L 16 46 C 16 52, 20 56, 32 56 C 44 56, 48 52, 48 46 L 48 28 Z" />
+                <path class="preloader-cup" d="M 48 34 C 54 34, 56 38, 56 42 C 56 46, 54 48, 48 48" />
+                <ellipse class="preloader-cup" cx="32" cy="28" rx="16" ry="4" />
+            </svg>
+            <div class="preloader-text">BREWING YOUR EXPERIENCE...</div>
+            <div class="preloader-track">
+                <div class="preloader-fill" id="preloader-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="hero" id="hero">
+        <!-- Ambient Background Blobs -->
+        <div class="ambient-blobs" id="ambient-blobs">
+            <div class="blob-parallax bp-1">
+                <div class="blob blob-1"></div>
+            </div>
+            <div class="blob-parallax bp-2">
+                <div class="blob blob-2"></div>
+            </div>
+            <div class="blob-parallax bp-3">
+                <div class="blob blob-3"></div>
+            </div>
+        </div>
+
+        <div class="hero-container">
+            <!-- 3D Rotation Container -->
+            <div class="logo-3d-wrapper" id="logo-3d-wrapper">
+                <div class="logo-text-wrapper" id="logo-text-wrapper">
+                    <h1 class="hero-logo-text" id="hero-logo-text">Aaradhya</h1>
+                    <div class="sheen-sweep" id="sheen-sweep"></div>
+                </div>
+            </div>
+
+            <!-- Tagline -->
+            <div class="tagline-container">
+                <span class="tagline-text" id="tagline-text">ARTISAN COFFEE. CRAFTED MOMENTS.</span>
+                <span class="cursor" id="cursor">|</span>
+            </div>
+        </div>
+
+        <!-- Scroll Cue -->
+        <div class="scroll-cue" id="scroll-cue">
+            <span>SCROLL TO EXPLORE</span>
+            <svg viewBox="0 0 24 24" class="scroll-chevron">
+                <path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </div>
+    </header>
+
+    <!-- LIQUID GLASS NAV (NO INDICATOR LINE) -->
+    <nav class="category-nav" id="category-nav">
+        <div class="category-nav-inner">
+            <!-- Liquid layers -->
+            <div class="liquid-layer liquid-layer-1"></div>
+            <div class="liquid-layer liquid-layer-2"></div>
+            <div class="liquid-layer liquid-layer-3"></div>
+            <div class="liquid-layer liquid-layer-4"></div>
+
+            <!-- Glass sheen -->
+            <div class="glass-sheen"></div>
+
+            <div class="nav-fade-left"></div>
+            <div class="nav-fade-right"></div>
+
+            <ul id="nav-list">
+                <li><button data-target="#coffee" class="nav-tab active">COFFEE</button></li>
+                <li><button data-target="#tea" class="nav-tab">TEA</button></li>
+                <li><button data-target="#milkshakes" class="nav-tab">MILKSHAKES</button></li>
+                <li><button data-target="#juice" class="nav-tab">JUICE</button></li>
+                <li><button data-target="#coolers" class="nav-tab">COOLERS</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN MENU CONTENT -->
+    <main>
+        <!-- COFFEE SECTION -->
+        <section id="coffee" class="menu-section">
+            <div class="section-header">
+                <h2 class="section-title">Coffee</h2>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/1.jfif" alt="Black Coffee" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Black Coffee</h3>
+                                <span class="menu-card-price">₹15</span>
+                            </div>
+                            <p class="menu-card-desc">Rich, bold, no frills</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/2.jfif" alt="Coffee" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Coffee</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Classic daily brew</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/3.jfif" alt="Hot Chocolate" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Hot Chocolate</h3>
+                                <span class="menu-card-price">₹25</span>
+                            </div>
+                            <p class="menu-card-desc">Rich cocoa and milk</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/4.jfif" alt="Hot Chocolate Coffee" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Hot Chocolate Coffee</h3>
+                                <span class="menu-card-price">₹30</span>
+                            </div>
+                            <p class="menu-card-desc">Best of both worlds</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/5.jfif" alt="Milk" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Milk</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Warm and comforting</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/6.jfif" alt="Pepper Milk" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Pepper Milk</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">A soothing spiced blend</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/7.jfif" alt="Turmeric Milk" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Turmeric Milk</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Golden healing goodness</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <div class="menu-card-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                POPULAR
+                            </div>
+                            <img src="assets/images/8.jfif" alt="Bellam Coffee" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Bellam Coffee</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Sweetened with real jaggery</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/9.jfif" alt="Boost" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Boost</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Classic malt energy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/10.jfif" alt="Horlicks" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Horlicks</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Nourishing malt drink</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/11.jfif" alt="Continental" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Continental</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Smooth premium blend</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION DIVIDER -->
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <svg class="divider-icon" viewBox="0 0 24 24">
+                <path
+                    d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,19.93C7.05,19.43 4,16.05 4,12C4,7.95 7.05,4.57 11,4.07V19.93M13,4.07C16.95,4.57 20,7.95 20,12C20,16.05 16.95,19.43 13,19.93V4.07Z" />
+            </svg>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- TEA SECTION -->
+        <section id="tea" class="menu-section">
+            <div class="section-header">
+                <h2 class="section-title">Tea</h2>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/12.jfif" alt="Dum Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Dum Tea</h3>
+                                <span class="menu-card-price">₹10</span>
+                            </div>
+                            <p class="menu-card-desc">Strong, milky, classic brew</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/13-.png" alt="Allam Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Allam Tea</h3>
+                                <span class="menu-card-price">₹15</span>
+                            </div>
+                            <p class="menu-card-desc">Warming ginger-infused black tea</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/14.jfif" alt="Black Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Black Tea</h3>
+                                <span class="menu-card-price">₹15</span>
+                            </div>
+                            <p class="menu-card-desc">Pure, bold, dairy-free</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/15.jpg" alt="Sugar Less Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Sugar Less Tea</h3>
+                                <span class="menu-card-price">₹15</span>
+                            </div>
+                            <p class="menu-card-desc">Guilt-free robust flavor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/16.png" alt="Bellam Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Bellam Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Sweetened with natural jaggery</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <div class="menu-card-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                POPULAR
+                            </div>
+                            <img src="assets/images/17.webp" alt="Masala Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Masala Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Aromatic spices in every sip</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/18.jfif" alt="Green Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Green Tea</h3>
+                                <span class="menu-card-price">₹25</span>
+                            </div>
+                            <p class="menu-card-desc">Light, fresh, and healthy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/19.jfif" alt="Lemon Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Lemon Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Zesty, bright, and refreshing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/20.jfif" alt="Badam Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Badam Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Rich almond creamy delight</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/21.png" alt="Ilachi Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Ilachi Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Fragrant cardamom goodness</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/22.png" alt="Ginger Lemon Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Ginger Lemon Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Spicy, tart, and soothing</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/23.png" alt="Allam Bellam Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Allam Bellam Tea</h3>
+                                <span class="menu-card-price">₹20</span>
+                            </div>
+                            <p class="menu-card-desc">Ginger and jaggery blend</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION DIVIDER -->
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <svg class="divider-icon" viewBox="0 0 24 24">
+                <path
+                    d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,19.93C7.05,19.43 4,16.05 4,12C4,7.95 7.05,4.57 11,4.07V19.93M13,4.07C16.95,4.57 20,7.95 20,12C20,16.05 16.95,19.43 13,19.93V4.07Z" />
+            </svg>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- MILKSHAKES SECTION -->
+        <section id="milkshakes" class="menu-section">
+            <div class="section-header">
+                <h2 class="section-title">Milkshakes</h2>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/24.jfif" alt="Rose Milk" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Rose Milk</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹40</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Delicate rose flavor, chilled</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/25.jfif" alt="Badam Milk" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Badam Milk</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹40</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Nutty almond sweet richness</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/26.jfif" alt="Vanilla" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Vanilla</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹50</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Classic creamy vanilla bean</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/27.webp" alt="Strawberry" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Strawberry</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Fresh berry sweet treat</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/28.jfif" alt="Chocolate" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Chocolate</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Rich cocoa, utterly decadent</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/29.jfif" alt="Black Currant" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Black Currant</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Tart and sweet fruity blend</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/30.webp" alt="Mango" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Mango</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Tropical king of fruits</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <div class="menu-card-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                POPULAR
+                            </div>
+                            <img src="assets/images/31.jfif" alt="Oreo" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Oreo</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Crushed cookies, creamy blend</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/32.jfif" alt="KitKat" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">KitKat</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Crispy wafer chocolate delight</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/33.jfif" alt="Blueberry" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Blueberry</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Sweet and tangy berry bliss</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/34.jfif" alt="Royal Dates" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Royal Dates</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹60</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Natural sweetness and energy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/35.jfif" alt="Pista Milk" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Pista Milk</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹70</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Premium pistachio nutty flavor</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/36.jfif" alt="Dry Fruit" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Dry Fruit</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹90</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Loaded with nuts and dates</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <div class="menu-card-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                POPULAR
+                            </div>
+                            <img src="assets/images/37.jfif" alt="Butter Scotch" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Butter Scotch</h3>
+                                <div class="menu-card-price-wrapper">
+                                    <span class="menu-card-price">₹90</span>
+                                    <div class="menu-card-note">+₹10 for extra ice cream</div>
+                                </div>
+                            </div>
+                            <p class="menu-card-desc">Rich caramel, smooth finish</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION DIVIDER -->
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <svg class="divider-icon" viewBox="0 0 24 24">
+                <path
+                    d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M11,19.93C7.05,19.43 4,16.05 4,12C4,7.95 7.05,4.57 11,4.07V19.93M13,4.07C16.95,4.57 20,7.95 20,12C20,16.05 16.95,19.43 13,19.93V4.07Z" />
+            </svg>
+            <div class="divider-line"></div>
+        </div>
+
+        <!-- JUICE SECTION -->
+        <section id="juice" class="menu-section">
+            <div class="section-header">
+                <h2 class="section-title">Juice</h2>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/38.jfif" alt="Sweet Lassi" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Sweet Lassi</h3>
+                                <span class="menu-card-price">₹40</span>
+                            </div>
+                            <p class="menu-card-desc">Creamy yogurt, lightly sweetened</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/39.jfif" alt="Karbuja (Muskmelon)" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Karbuja (Muskmelon)</h3>
+                                <span class="menu-card-price">₹40</span>
+                            </div>
+                            <p class="menu-card-desc">Fresh muskmelon, naturally sweet</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/40.jfif" alt="Banana" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Banana</h3>
+                                <span class="menu-card-price">₹40</span>
+                            </div>
+                            <p class="menu-card-desc">Fresh banana, thick and creamy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/41.jfif" alt="Fruit Mixer" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Fruit Mixer</h3>
+                                <span class="menu-card-price">₹60</span>
+                            </div>
+                            <p class="menu-card-desc">A medley of fresh fruits</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <div class="menu-card-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                POPULAR
+                            </div>
+                            <img src="assets/images/42.jfif" alt="Kaju Banana" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Kaju Banana</h3>
+                                <span class="menu-card-price">₹80</span>
+                            </div>
+                            <p class="menu-card-desc">Cashew-banana blend, rich texture</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COOLERS SECTION -->
+        <section id="coolers" class="menu-section">
+            <div class="section-header">
+                <h2 class="section-title">Coolers</h2>
+            </div>
+            <div class="menu-grid">
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/43.jfif" alt="Limint" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Limint</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Zesty lime and fresh mint</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/44.jfif" alt="Mint Mojito" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Mint Mojito</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Classic mint, lightly fizzy</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/45.jfif" alt="Fizzy Mojito" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Fizzy Mojito</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Tangy citrus soda blend</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/46.jfif" alt="Ginger Lemon Iced Tea" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Ginger Lemon Iced Tea</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Spiced ginger, iced and zesty</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/47.webp" alt="Rose Lemonade" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Rose Lemonade</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Floral rose, citrus finish</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/48.jfif" alt="Orange" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Orange</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Fresh-pressed, naturally sweet</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <img src="assets/images/49.jfif" alt="Watermelon" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Watermelon</h3>
+                                <span class="menu-card-price">₹45</span>
+                            </div>
+                            <p class="menu-card-desc">Cool, hydrating, summer favorite</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card-wrapper">
+                    <div class="menu-card">
+                        <div class="menu-card-image-wrapper">
+                            <div class="menu-card-badge">
+                                <svg viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                POPULAR
+                            </div>
+                            <img src="assets/images/50.jfif" alt="Blue Lagoon" class="menu-card-image">
+                        </div>
+                        <div class="menu-card-content">
+                            <div class="menu-card-header">
+                                <h3 class="menu-card-title">Blue Lagoon</h3>
+                                <span class="menu-card-price">₹60</span>
+                            </div>
+                            <p class="menu-card-desc">Layered blue citrus, refreshing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer id="footer" class="site-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand footer-anim-item">
+                    <h2 class="footer-logo">Aaradhya</h2>
+                    <p class="footer-tagline">Crafted with care, served with warmth.</p>
+                </div>
+                <div class="footer-info footer-anim-item">
+                    <p>Pulapalli, Palakollu</p>
+                    <p>Open Daily: 6:00 AM – 9:00 PM</p>
+                    <p style="margin-top: 0.5rem; font-size: 0.85em; opacity: 0.8;">*All images are for reference
+                        purposes only.</p>
+                </div>
+                <div class="footer-social footer-anim-item">
+                    <a href="tel:8885517179" class="social-icon" aria-label="Call">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-bottom footer-anim-item">
+                <p class="copyright">&copy; 2026 Aaradhya Cafe. All rights reserved.</p>
+                <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+                    Back to top
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP & PLUGINS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+    <!-- CUSTOM JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const preloader = document.getElementById('preloader');
+            const preloaderTop = document.getElementById('preloader-top');
+            const preloaderBottom = document.getElementById('preloader-bottom');
+            const preloaderContent = document.getElementById('preloader-content');
+            const preloaderFill = document.getElementById('preloader-fill');
+
+            // Setup Tagline characters
+            const tagline = document.getElementById('tagline-text');
+            const originalText = tagline.textContent;
+            const words = originalText.split(' ');
+            tagline.innerHTML = words.map(word => {
+                return `<span style="white-space: nowrap; display: inline-block; margin-right: 0.3em;">` +
+                    word.split('').map(char => `<span class="char">${char}</span>`).join('') +
+                    `</span>`;
+            }).join('');
+            const chars = document.querySelectorAll('.char');
+            gsap.set(chars, { opacity: 0 });
+
+            // ===== HERO ANIMATION =====
+            function playHeroAnimation() {
+                const logoWrapper = document.getElementById('logo-3d-wrapper');
+                const heroLogoText = document.getElementById('hero-logo-text');
+                const logoTextInner = document.getElementById('logo-text-wrapper');
+                const sheenSweep = document.getElementById('sheen-sweep');
+                const cursor = document.getElementById('cursor');
+                const scrollCue = document.getElementById('scroll-cue');
+                const scrollChevron = scrollCue.querySelector('.scroll-chevron');
+
+                const originalWord = heroLogoText.textContent;
+                heroLogoText.innerHTML = originalWord.split('').map(
+                    ch => `<span class="splatter-letter">${ch}</span>`
+                ).join('');
+                const letterSpans = heroLogoText.querySelectorAll('.splatter-letter');
+
+                if (prefersReducedMotion) {
+                    gsap.set(logoWrapper, { opacity: 1, rotateX: 0, rotateY: 0, scale: 1 });
+                    gsap.set(letterSpans, { opacity: 1, x: 0, y: 0, scale: 1, rotation: 0 });
+                    gsap.set(chars, { opacity: 1 });
+                    gsap.set(scrollCue, { opacity: 1 });
+                    gsap.set(cursor, { display: 'none' });
+                    gsap.from([logoWrapper, tagline, scrollCue], { opacity: 0, duration: 0.5 });
+                    return;
+                }
+
+                const bp1 = gsap.quickTo('.bp-1', 'x', { duration: 1.5, ease: 'power3' });
+                const bp1y = gsap.quickTo('.bp-1', 'y', { duration: 1.5, ease: 'power3' });
+                const bp2 = gsap.quickTo('.bp-2', 'x', { duration: 1.2, ease: 'power3' });
+                const bp2y = gsap.quickTo('.bp-2', 'y', { duration: 1.2, ease: 'power3' });
+                const bp3 = gsap.quickTo('.bp-3', 'x', { duration: 1.8, ease: 'power3' });
+                const bp3y = gsap.quickTo('.bp-3', 'y', { duration: 1.8, ease: 'power3' });
+
+                document.getElementById('hero').addEventListener('mousemove', (e) => {
+                    const x = (e.clientX - window.innerWidth / 2) / 20;
+                    const y = (e.clientY - window.innerHeight / 2) / 20;
+                    bp1(-x * 1.5); bp1y(-y * 1.5);
+                    bp2(-x * 0.8); bp2y(-y * 0.8);
+                    bp3(-x * 2.0); bp3y(-y * 2.0);
+                });
+
+                gsap.set(logoWrapper, { opacity: 0.3, rotateX: 50, rotateY: -20, transformPerspective: 1000 });
+                gsap.set(cursor, { opacity: 0 });
+
+                const heroTl = gsap.timeline();
+
+                letterSpans.forEach(letter => {
+                    gsap.set(letter, { opacity: 0, x: -40 + Math.random() * 80, y: -(80 + Math.random() * 40), scale: 1.4 + Math.random() * 0.2, rotation: -15 + Math.random() * 30 });
+                });
+
+                letterSpans.forEach((letter, index) => {
+                    heroTl.to(letter, {
+                        opacity: 1, x: 0, y: 0, scale: 1, rotation: 0,
+                        duration: 0.45, ease: 'back.out(2)',
+                        onComplete: () => {
+                            const numDroplets = 2 + Math.floor(Math.random() * 2);
+                            for (let d = 0; d < numDroplets; d++) {
+                                const dot = document.createElement('div');
+                                dot.classList.add('splatter-dot');
+                                letter.appendChild(dot);
+                                const angle = Math.random() * Math.PI * 2;
+                                const dist = 10 + Math.random() * 20;
+                                const size = 3 + Math.random() * 2;
+                                gsap.set(dot, { width: size, height: size, x: 0, y: 0, opacity: 0.9, left: '50%', top: '80%', position: 'absolute' });
+                                gsap.to(dot, { x: Math.cos(angle) * dist, y: Math.sin(angle) * dist, opacity: 0, scale: 0.3, duration: 0.2 + Math.random() * 0.1, ease: 'power2.out', onComplete: () => dot.remove() });
+                            }
+                        }
+                    }, 0.6 + index * 0.09);
+                });
+
+                heroTl.to(logoWrapper, { rotateX: 0, rotateY: 0, opacity: 1, duration: 1.0, ease: 'back.out(1.4)' }, 1.7);
+
+                heroTl.set(sheenSweep, { opacity: 0.6 }, '+=0.2')
+                    .to(sheenSweep, { left: '150%', duration: 0.8, ease: 'power1.inOut' })
+                    .set(sheenSweep, { opacity: 0 });
+
+                heroTl.add(() => {
+                    gsap.to(logoTextInner, { scale: 1.02, duration: 3.5, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+                })
+                    .set(cursor, { opacity: 1 })
+                    .to(chars, { opacity: 1, stagger: 0.03, ease: 'none' })
+                    .to(cursor, { opacity: 0, duration: 0.35, repeat: 3, yoyo: true, ease: 'power1.inOut' })
+                    .set(cursor, { display: 'none' });
+
+                heroTl.to(scrollCue, { opacity: 1, duration: 0.6, ease: 'power2.out' })
+                    .add(() => {
+                        gsap.to(scrollChevron, { y: 6, duration: 1.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+                    });
+            }
+
+            // ===== PRELOADER =====
+            if (prefersReducedMotion) {
+                gsap.set(preloaderFill, { width: '100%' });
+                gsap.to(preloader, { opacity: 0, duration: 0.3, delay: 1, onComplete: () => { preloader.style.display = 'none'; playHeroAnimation(); } });
+            } else {
+                gsap.to(preloaderFill, {
+                    width: '100%', duration: 2.5, ease: 'power2.inOut', onComplete: () => {
+                        const tl = gsap.timeline({ onComplete: () => { preloader.style.display = 'none'; playHeroAnimation(); } });
+                        tl.to(preloaderContent, { opacity: 0, duration: 0.3, ease: 'power1.inOut' })
+                            .to(preloaderTop, { yPercent: -100, duration: 0.8, ease: 'power3.inOut' }, 'split')
+                            .to(preloaderBottom, { yPercent: 100, duration: 0.8, ease: 'power3.inOut' }, 'split');
+                    }
+                });
+            }
+
+            // ===== CATEGORY NAV (NO INDICATOR) =====
+            const navBar = document.getElementById('category-nav');
+            const navList = document.getElementById('nav-list');
+            const navTabs = document.querySelectorAll('.nav-tab');
+            let isNavAnimating = false;
+
+            gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+            ScrollTrigger.create({
+                trigger: navBar,
+                start: 'top top',
+                endTrigger: 'footer',
+                end: 'bottom bottom',
+                toggleClass: { targets: navBar, className: 'is-pinned' }
+            });
+
+            function updateActiveTab(targetTab) {
+                if (!targetTab) return;
+                navTabs.forEach(tab => tab.classList.remove('active'));
+                targetTab.classList.add('active');
+
+                if (window.innerWidth <= 768) {
+                    const navRect = navList.getBoundingClientRect();
+                    const tabRect = targetTab.getBoundingClientRect();
+                    const offsetLeft = tabRect.left - navRect.left + navList.scrollLeft;
+                    const width = tabRect.width;
+                    const scrollLeft = offsetLeft - navRect.width / 2 + width / 2;
+                    gsap.to(navList, { scrollLeft: Math.max(0, scrollLeft), duration: 0.3, ease: 'power2.out' });
+                }
+            }
+
+            if (navTabs.length > 0) {
+                setTimeout(() => updateActiveTab(navTabs[0]), 100);
+            }
+
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.getAttribute('data-target');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        isNavAnimating = true;
+                        updateActiveTab(tab);
+                        const navHeight = navBar.offsetHeight;
+                        gsap.to(window, {
+                            scrollTo: { y: targetSection, offsetY: navHeight },
+                            duration: 0.8,
+                            ease: 'power3.inOut',
+                            onComplete: () => { isNavAnimating = false; }
+                        });
+                    }
+                });
+            });
+
+            const sections = ['#coffee', '#tea', '#milkshakes', '#juice', '#coolers'];
+            sections.forEach((id) => {
+                const section = document.querySelector(id);
+                const tab = document.querySelector(`[data-target="${id}"]`);
+                if (section && tab) {
+                    ScrollTrigger.create({
+                        trigger: section,
+                        start: 'top center',
+                        end: 'bottom center',
+                        onEnter: () => { if (!isNavAnimating) updateActiveTab(tab); },
+                        onEnterBack: () => { if (!isNavAnimating) updateActiveTab(tab); }
+                    });
+                }
+            });
+
+            if (!prefersReducedMotion) {
+                gsap.set(navTabs, { y: 10, opacity: 0 });
+                ScrollTrigger.create({
+                    trigger: navBar,
+                    start: 'top 95%',
+                    once: true,
+                    onEnter: () => {
+                        gsap.to(navTabs, { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power2.out' });
+                    }
+                });
+            } else {
+                gsap.set(navTabs, { y: 0, opacity: 1 });
+            }
+
+            // ===== MENU ANIMATIONS =====
+            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+            const menuGrids = document.querySelectorAll('.menu-grid');
+            menuGrids.forEach(grid => {
+                const cards = grid.querySelectorAll('.menu-card-wrapper');
+                if (!prefersReducedMotion) {
+                    gsap.set(cards, { opacity: 0, scale: 0.9, y: 20 });
+                    ScrollTrigger.create({
+                        trigger: grid,
+                        start: 'top 85%',
+                        once: true,
+                        onEnter: () => {
+                            gsap.to(cards, { opacity: 1, scale: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1.2)' });
+                        }
+                    });
+                } else {
+                    gsap.set(cards, { opacity: 1, scale: 1, y: 0 });
+                }
+            });
+
+            if (!prefersReducedMotion && !isTouchDevice) {
+                const wrappers = document.querySelectorAll('.menu-card-wrapper');
+                wrappers.forEach(wrapper => {
+                    const card = wrapper.querySelector('.menu-card');
+                    const price = wrapper.querySelector('.menu-card-price');
+                    const xTo = gsap.quickTo(card, 'rotateY', { duration: 0.4, ease: 'power2.out' });
+                    const yTo = gsap.quickTo(card, 'rotateX', { duration: 0.4, ease: 'power2.out' });
+                    wrapper.addEventListener('mousemove', (e) => {
+                        const rect = wrapper.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        const xPct = (x / rect.width - 0.5) * 2;
+                        const yPct = (y / rect.height - 0.5) * 2;
+                        xTo(xPct * 8);
+                        yTo(-yPct * 8);
+                    });
+                    wrapper.addEventListener('mouseleave', () => { xTo(0); yTo(0); });
+                    if (price) {
+                        wrapper.addEventListener('mouseenter', () => {
+                            gsap.to(price, { scale: 1.15, duration: 0.2, yoyo: true, repeat: 1, ease: 'power1.inOut' });
+                        });
+                    }
+                });
+            }
+
+            const dividers = document.querySelectorAll('.section-divider');
+            dividers.forEach(divider => {
+                if (!prefersReducedMotion) {
+                    ScrollTrigger.create({
+                        trigger: divider,
+                        start: 'top 90%',
+                        once: true,
+                        onEnter: () => {
+                            gsap.to(divider, { opacity: 1, scale: 1, duration: 0.8, ease: 'power2.out' });
+                        }
+                    });
+                } else {
+                    gsap.set(divider, { opacity: 1, scale: 1 });
+                }
+            });
+
+            // ===== FOOTER ANIMATIONS =====
+            const footerItems = document.querySelectorAll('.footer-anim-item');
+            if (footerItems.length > 0) {
+                if (!prefersReducedMotion) {
+                    ScrollTrigger.create({
+                        trigger: '.site-footer',
+                        start: 'top 90%',
+                        once: true,
+                        onEnter: () => {
+                            gsap.to(footerItems, {
+                                opacity: 1,
+                                y: 0,
+                                duration: 0.6,
+                                stagger: 0.1,
+                                ease: 'power2.out'
+                            });
+                        }
+                    });
+                } else {
+                    gsap.set(footerItems, { opacity: 1, y: 0 });
+                }
+            }
+
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                backToTopBtn.addEventListener('click', () => {
+                    if (prefersReducedMotion) {
+                        window.scrollTo(0, 0);
+                    } else {
+                        gsap.to(window, { duration: 1, scrollTo: 0, ease: 'power2.inOut' });
+                    }
+                });
+            }
+        });
+
+        // ===== ITEM DETAIL MODAL =====
+        (async function initModal() {
+            let menuData = {};
+            try {
+                const res = await fetch('menu-data.json');
+                const json = await res.json();
+                // Flatten all categories into one lookup map keyed by name
+                Object.values(json).forEach(category => {
+                    category.forEach(item => { menuData[item.name] = item; });
+                });
+            } catch (e) {
+                console.warn('menu-data.json could not be loaded:', e);
+                return;
+            }
+
+            const overlay = document.getElementById('item-modal-overlay');
+            const modalImg = document.getElementById('item-modal-image');
+            const modalName = document.getElementById('item-modal-name');
+            const modalPrice = document.getElementById('item-modal-price');
+            const modalPopular = document.getElementById('item-modal-popular');
+            const modalDesc = document.getElementById('item-modal-desc');
+            const modalIngredients = document.getElementById('item-modal-ingredients');
+            const closeBtn = document.getElementById('item-modal-close');
+
+            function openModal(wrapper) {
+                const titleEl = wrapper.querySelector('.menu-card-title');
+                const imgEl = wrapper.querySelector('.menu-card-image');
+                if (!titleEl) return;
+                const name = titleEl.textContent.trim();
+                const item = menuData[name];
+                if (!item) { console.warn('No JSON match for:', name); return; }
+
+                modalImg.src = imgEl ? imgEl.src : '';
+                modalImg.alt = name;
+                modalName.textContent = item.name;
+                modalPrice.textContent = '\u20B9' + item.price;
+                modalDesc.textContent = item.description;
+                modalIngredients.textContent = item.ingredients;
+                if (item.popular) {
+                    modalPopular.hidden = false;
+                } else {
+                    modalPopular.hidden = true;
+                }
+                overlay.classList.add('is-open');
+                document.body.style.overflow = 'hidden';
+                closeBtn.focus();
+            }
+
+            function closeModal() {
+                overlay.classList.remove('is-open');
+                document.body.style.overflow = '';
+            }
+
+            // Attach click to every card wrapper
+            document.querySelectorAll('.menu-card-wrapper').forEach(wrapper => {
+                wrapper.style.cursor = 'pointer';
+                wrapper.addEventListener('click', () => openModal(wrapper));
+                wrapper.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(wrapper); }
+                });
+                wrapper.setAttribute('tabindex', '0');
+                wrapper.setAttribute('role', 'button');
+                const title = wrapper.querySelector('.menu-card-title');
+                if (title) wrapper.setAttribute('aria-label', 'View details for ' + title.textContent.trim());
+            });
+
+            closeBtn.addEventListener('click', closeModal);
+            overlay.querySelector('.item-modal-backdrop').addEventListener('click', closeModal);
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+        })();
+    </script>
+
+    <!-- ITEM DETAIL MODAL OVERLAY -->
+    <div id="item-modal-overlay" class="item-modal-overlay" role="dialog" aria-modal="true"
+        aria-labelledby="item-modal-name">
+        <div class="item-modal-backdrop"></div>
+        <div class="item-modal">
+            <button id="item-modal-close" class="item-modal-close" aria-label="Close details">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            <div class="item-modal-image-wrapper">
+                <img id="item-modal-image" src="" alt="" class="item-modal-image">
+            </div>
+            <div class="item-modal-body">
+                <div class="item-modal-header">
+                    <h2 id="item-modal-name" class="item-modal-name"></h2>
+                    <span id="item-modal-price" class="item-modal-price"></span>
+                </div>
+                <div id="item-modal-popular" class="item-modal-popular" hidden>
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg>
+                    MOST POPULAR
+                </div>
+                <p id="item-modal-desc" class="item-modal-desc"></p>
+                <div class="item-modal-ingredients-label">Ingredients</div>
+                <div id="item-modal-ingredients" class="item-modal-ingredients"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
